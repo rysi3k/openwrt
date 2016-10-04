@@ -1,0 +1,44 @@
+diff --git a/configure b/configure
+index a5dc351..f4ec095 100755
+--- a/configure
++++ b/configure
+@@ -7745,7 +7745,7 @@ else
+   nrpe_port=5666
+ fi
+ 
+-NRPE_INSTALL_OPTS="-o $nrpe_user -g $nrpe_group"
++NRPE_INSTALL_OPTS=""
+ 
+ cat >>confdefs.h <<_ACEOF
+ #define DEFAULT_SERVER_PORT $nrpe_port
+@@ -7768,7 +7768,7 @@ else
+   nagios_group=nagios
+ fi
+ 
+-NAGIOS_INSTALL_OPTS="-o $nagios_user -g $nagios_group"
++NAGIOS_INSTALL_OPTS=""
+ 
+ 				if test "`uname -s`" = "HP-UX" ; then
+ 		LDFLAGS="$LDFLAGS -Wl,+allowdups";
+diff --git a/configure.ac b/configure.ac
+index 47760b4..7bdac7e 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -333,7 +333,7 @@ AC_ARG_WITH([nrpe_port],
+ 		[sets port number for NRPE to listen on]),
+ 	[nrpe_port=$withval],
+ 	[nrpe_port=5666])
+-NRPE_INSTALL_OPTS="-o $nrpe_user -g $nrpe_group"
++NRPE_INSTALL_OPTS=""
+ AC_DEFINE_UNQUOTED(DEFAULT_SERVER_PORT,$nrpe_port,[Default port for NRPE daemon])
+ 
+ AC_ARG_WITH([nagios_user],
+@@ -346,7 +346,7 @@ AC_ARG_WITH([nagios_group],
+ 		[sets group name file permissions]),
+ 	[nagios_group=$withval],
+ 	[nagios_group=nagios])
+-NAGIOS_INSTALL_OPTS="-o $nagios_user -g $nagios_group"
++NAGIOS_INSTALL_OPTS=""
+ 
+ 	dnl On HP-UX the compile will fail with a 'Duplicate symbol "setenv"' error
+ 	dnl in '/usr/local/lib/libwrap.a(setenv.o)' and '/usr/local/lib/libiberty.a(setenv.o)'
