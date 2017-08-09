@@ -26,7 +26,7 @@ define Package/nrpe
   CATEGORY:=Network
   TITLE:=Nagios Remote Plugin Executor Server
   URL:=https://github.com/NagiosEnterprises/nrpe
-  DEPENDS:=+libopenssl +libwrap
+  DEPENDS:=+libopenssl
   USERID:=nagios:nagios
   MAINTAINER:=Christian Kujau <openwrt@nerdbynature.de>
 endef
@@ -38,7 +38,8 @@ endef
 
 CONFIGURE_ARGS += \
 	--with-ssl=$(STAGING_DIR)/usr \
-	--with-ssl-lib=$(STAGING_DIR)/usr/lib
+	--with-ssl-lib=$(STAGING_DIR)/usr/lib \
+	--with-wrap=no
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) nrpe
