@@ -28,7 +28,7 @@ define Package/nrpe
   URL:=https://github.com/NagiosEnterprises/nrpe
   DEPENDS:=+libopenssl
   USERID:=nagios:nagios
-  MAINTAINER:=Christian Kujau <openwrt@nerdbynature.de>
+  MAINTAINER:=Michael Howe <michael@michaelhowe.org>
 endef
 
 define Package/nrpe/description
