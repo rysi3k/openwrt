@@ -39,7 +39,8 @@ endef
 CONFIGURE_ARGS += \
 	--with-ssl=$(STAGING_DIR)/usr \
 	--with-ssl-lib=$(STAGING_DIR)/usr/lib \
-	--with-wrap=no
+	--with-wrap=no \
+	--with-pluginsdir=/usr/libexec/nagios
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) nrpe
