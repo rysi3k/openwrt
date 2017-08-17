@@ -31,14 +31,12 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
     scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
     ```
 *    Then, on the GL150, install and enable nrpe:
-
     ```
     tar xvf monitoring-packages.tar
     opkg install base/*.ipk
     /etc/init.d/nrpe enable
     /etc/init.d/nrpe start
     ```
-
 *   Add your source host to `allowed_hosts` in `/etc/nrpe.cfg` and `/etc/init.d/nrpe stop; /etc/init.d/nrpe start`
 *   Confirm nrpe is running: `netstat -lnp | grep 5666`
 *   Check from a client:
