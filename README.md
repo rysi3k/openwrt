@@ -25,12 +25,12 @@ ln -s ../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
 *   `script -c "time make -j4 V=s package/nrpe/compile" -a ~/nrpe-build.log`
 *   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
 *    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/ar71xx/packages/base/`
-*    Copy across to the GL150:
+*    Copy across to the GL-AR150:
 ```
 cd bin/ar71xx/packages && tar -cvf /tmp/monitoring-packages.tar base/
 scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
 ```
-*    Then, on the GL150, install and enable nrpe:
+*    Then, on the GL-AR150, install and enable nrpe:
 ```
 tar xvf monitoring-packages.tar
 opkg install base/*.ipk
