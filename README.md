@@ -17,30 +17,30 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
 *    Sanity check: `make prereq`
 *    Build with: `script -c "time make -j4 V=s tools/install && date && time make -j4 V=s toolchain/install" ~/build.log`
 *   Check out the packages from this git repository:
-    ```
-    git clone https://github.com/mdhowe/openwrt.git ../openwrt-packages
-    ln -s ../openwrt-packages/package/network/utils/monitoring-plugins package/network/utils/monitoring-plugins
-    ln -s ../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
-    ```
+```
+git clone https://github.com/mdhowe/openwrt.git ../openwrt-packages
+ln -s ../openwrt-packages/package/network/utils/monitoring-plugins package/network/utils/monitoring-plugins
+ln -s ../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
+```
 *   `script -c "time make -j4 V=s package/nrpe/compile" -a ~/nrpe-build.log`
-    `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
+*   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
 *    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/ar71xx/packages/base/`
 *    Copy across to the GL150:
-    ```
-    cd bin/ar71xx/packages && tar -cvf /tmp/monitoring-packages.tar base/
-    scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
-    ```
+```
+cd bin/ar71xx/packages && tar -cvf /tmp/monitoring-packages.tar base/
+scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
+```
 *    Then, on the GL150, install and enable nrpe:
-    ```
-    tar xvf monitoring-packages.tar
-    opkg install base/*.ipk
-    /etc/init.d/nrpe enable
-    /etc/init.d/nrpe start
-    ```
+```
+tar xvf monitoring-packages.tar
+opkg install base/*.ipk
+/etc/init.d/nrpe enable
+/etc/init.d/nrpe start
+```
 *   Add your source host to `allowed_hosts` in `/etc/nrpe.cfg` and `/etc/init.d/nrpe stop; /etc/init.d/nrpe start`
 *   Confirm nrpe is running: `netstat -lnp | grep 5666`
 *   Check from a client:
-    ```
-    % /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_load
-    OK - load average: 0.10, 0.39, 0.23|load1=0.100;15.000;30.000;0; load5=0.390;10.000;25.000;0; load15=0.230;5.000;20.000;0;
-    ```
+```
+% /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_load
+OK - load average: 0.10, 0.39, 0.23|load1=0.100;15.000;30.000;0; load5=0.390;10.000;25.000;0; load15=0.230;5.000;20.000;0;
+```
