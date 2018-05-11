@@ -19,9 +19,10 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
 *   Check out the packages from this git repository:
 ```
 git clone https://github.com/mdhowe/openwrt.git ../openwrt-packages
-ln -s ../openwrt-packages/package/network/utils/monitoring-plugins package/network/utils/monitoring-plugins
-ln -s ../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
+ln -s ../../../../openwrt-packages/package/network/utils/monitoring-plugins package/network/utils/monitoring-plugins
+ln -s ../../../../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
 ```
+*   `make oldconfig` and choose to make nrpe and monitoring-plugins as modules
 *   `script -c "time make -j4 V=s package/nrpe/compile" -a ~/nrpe-build.log`
 *   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
 *    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/ar71xx/packages/base/`
