@@ -39,7 +39,47 @@ Ensure connected to internet, then:
 
   you need to `/etc/init.d/apcupsd restart` again)
 
-* Test with `apcaccess`
+* Test by running `apcaccess`
+
+      root@GL-AR150-new:~# apcaccess
+      APC      : 001,037,0930
+      DATE     : 2018-06-10 19:02:47 +0100  
+      HOSTNAME : GL-AR150-new
+      VERSION  : 3.14.14 (31 May 2016) unknown
+      UPSNAME  : ups1
+      CABLE    : USB Cable
+      DRIVER   : USB UPS Driver
+      UPSMODE  : Stand Alone
+      STARTTIME: 2018-06-10 17:08:48 +0100  
+      MODEL    : Back-UPS RS 900G 
+      STATUS   : ONBATT 
+      LINEV    : 0.0 Volts
+      LOADPCT  : 0.0 Percent
+      BCHARGE  : 27.0 Percent
+      TIMELEFT : 683.4 Minutes
+      MBATTCHG : 5 Percent
+      MINTIMEL : 3 Minutes
+      MAXTIME  : 0 Seconds
+      SENSE    : Medium
+      LOTRANS  : 176.0 Volts
+      HITRANS  : 294.0 Volts
+      ALARMDEL : No alarm
+      BATTV    : 25.7 Volts
+      LASTXFER : No transfers since turnon
+      NUMXFERS : 2
+      XONBATT  : 2018-06-10 19:02:43 +0100  
+      TONBATT  : 8 Seconds
+      CUMONBATT: 5935 Seconds
+      XOFFBATT : 2018-06-10 18:48:07 +0100  
+      SELFTEST : OK
+      STATFLAG : 0x05060010
+      SERIALNO : 3B1733X16096  
+      BATTDATE : 2017-08-19
+      NOMINV   : 230 Volts
+      NOMBATTV : 24.0 Volts
+      NOMPOWER : 540 Watts
+      FIRMWARE : 879.L4 .I USB FW:L4
+      END APC  : 2018-06-10 19:02:51 +0100
 
 (From <https://wiki.openwrt.org/doc/howto/apcupsd_es500>)
 
