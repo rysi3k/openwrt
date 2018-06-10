@@ -26,6 +26,7 @@ ln -s ../../../../openwrt-packages/package/network/utils/nrpe package/network/ut
 *   `script -c "time make -j4 V=s package/nrpe/compile" -a ~/nrpe-build.log`
 *   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
 *    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/ar71xx/packages/base/`
+*   **check** that they look sane - you want nrpe and monitoring-plugins, and perhaps libopenssl.  If you have libc (for example) things will probably break.
 *    Copy across to the GL-AR150:
 ```
 cd bin/ar71xx/packages && tar -cvf /tmp/monitoring-packages.tar base/
