@@ -15,6 +15,54 @@
 * Powercycle system (this enables SSH)
 * Connect via SSH: `ssh -oUserKnownHostsFile=/dev/null root@192.168.8.1`
 
+## Configure the device
+
+Set hostname:
+
+* Edit `/etc/config/system` and modify the `option hostname 'GL-AR150'` line
+* `/etc/init.d/system restart`
+
+Disable wireless:
+
+* Edit `/etc/config/wireless` and to `config wifi-iface 'default_radio0'` stanza add:
+
+      option disabled '1'
+
+
+### Make services available over wan as well as lan interface
+
+PoE only works over the WAN port.  To reduce the number of ports required to
+make the device function, the WAN port can be configured similarly to the LAN
+port.
+
+* Edit `/etc/config/firewall` - to config zone named "lan", set:
+
+      option network 'lan wan'
+
+  and to config zone named "wan" set:
+
+      option network 'wan6'
+
+* `/etc/init.d/firewall` restart
+
+### Disable functions on LAN port
+
+If using the LAN port, you may well not want DHCP running.
+
+To disable DHCP on LAN port:
+
+* Edit `/etc/config/dhcp` and in the `config dhcp 'lan'` stanza set:
+
+      option ignore '1'
+
+  remove the following if present:
+
+      option dhcpv6 'server'
+      option ra 'server'
+
+* `/etc/init.d/dnsmasq restart`
+* `/etc/init.d/odhcpd restart`
+
 ## Install apcupsd
 
 Ensure connected to internet, then:
