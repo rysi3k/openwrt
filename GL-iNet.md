@@ -47,6 +47,24 @@ Ensure connected to internet, then:
 
 Follow README.md
 
+## Install the checks
+
+* Download check:
+    
+      wget -O /usr/sbin/check_apcupsd http://lancet.mit.edu/mwall/projects/nagios/check_apcupsd
+      chmod +x /usr/sbin/check_apcupsd
+
+* Edit `/usr/sbin/check_apcupsd` and modify `APCACCESS=/sbin/apcaccess` to `APCACCESS=/usr/sbin/apcaccess`
+
+* Add lines to `/etc/nrpe.cfg`:
+
+      command[check_apc_status]=/usr/sbin/check_apcupsd status
+      command[check_apc_charge]=/usr/sbin/check_apcupsd charge
+      # temp isn't implemented
+      #command[check_apc_temp]=/usr/sbin/check_apcupsd temp
+      command[check_apc_load]=/usr/sbin/check_apcupsd load
+      command[check_apc_time]=/usr/sbin/check_apcupsd time
+
 
 ## Recovering if you brick the device
 
