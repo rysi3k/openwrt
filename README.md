@@ -36,10 +36,10 @@ scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
 ```
 tar xvf monitoring-packages.tar
 opkg install base/*.ipk
-/etc/init.d/nrpe enable
-/etc/init.d/nrpe start
+/etc/init.d/nagios-nrpe enable
+/etc/init.d/nagios-nrpe start
 ```
-*   Add your source host to `allowed_hosts` in `/etc/nrpe.cfg` and `/etc/init.d/nrpe stop; /etc/init.d/nrpe start`
+*   Add your source host to `allowed_hosts` in `/etc/nrpe.cfg` and `/etc/init.d/nagios-nrpe restart`
 *   Confirm nrpe is running: `netstat -lnp | grep 5666`
 *   Check from a client:
 ```
