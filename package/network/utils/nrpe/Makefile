@@ -50,7 +50,7 @@ define Package/nrpe/install
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/openwrt-init $(1)/etc/init.d/$(PKG_NAME)
+	$(INSTALL_BIN) ./files/openwrt-init $(1)/etc/init.d/nagios-$(PKG_NAME)
 	$(CP) $(PKG_BUILD_DIR)/src/nrpe $(1)/usr/sbin
 	$(CP) $(PKG_BUILD_DIR)/sample-config/nrpe.cfg $(1)/etc/nrpe.cfg
 endef
