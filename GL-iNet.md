@@ -19,27 +19,27 @@
 
 Ensure connected to internet, then:
 
-* opkg update
-* opkg install kmod-usb-hid
-* opkg install apcupsd
+* `opkg update`
+* `opkg install kmod-usb-hid`
+* `opkg install apcupsd`
 
 * Edit `/etc/apcupsd/apcupsd.conf`:
 
-    UPSNAME location_name
-    UPSCABLE usb
-    UPSTYPE usb
+      UPSNAME location_name
+      UPSCABLE usb
+      UPSTYPE usb
 
-  Ensure that DEVICE is not defined (comment out)
+  Ensure that `DEVICE` is not defined (comment out)
 
 * Restart: `/etc/init.d/apcupsd restart`
   (if you get this error:
 
-    cat: can't open '/var/run/apcupsd.pid': No such file or directory
-    sh: you need to specify whom to kill
+      cat: can't open '/var/run/apcupsd.pid': No such file or directory
+      sh: you need to specify whom to kill
 
-  you need to /etc/init.d/apcupsd restart again)
+  you need to `/etc/init.d/apcupsd restart` again)
 
-* Test with apcaccess
+* Test with `apcaccess`
 
 (From <https://wiki.openwrt.org/doc/howto/apcupsd_es500>)
 
