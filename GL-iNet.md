@@ -2,20 +2,26 @@
 
 ## Installing most up-to-date version of the software
 
-* Connect WAN port to internet
+The GL-iNet needs to be updated with the latest version of the firmware.  (If
+this goes wrong, see the final section on recovering if you brick the device.)
+
 * Power on device
-* Connect to LAN port, assign local machine IP in range 192.168.8.0/24 (not .1)
-* Browse to http://192.168.8.1 and follow instructions to set password
-* Go to Firmware link on left-hand side, upgrade to the newest version (2.27)
-  * Untick 'Keep settings' to ensure a clean install
-  * If no internet connection available, download firmware from
-    <https://www.gl-inet.com/firmware/ar150/v1/> (as of May 2018,
-    lede-ar150-2.27.bin) and upload
-* Browse to 192.168.8.1 and set password
+* Connect the LAN port.  The GL-iNet will have the IP 192.168.8.1, so assign an
+  appropriate address in the range 192.168.8.0/24 to a system to manage it.
+* Browse to <http://192.168.8.1> and follow instructions to set password
+* If convenient, connect the WAN port to the internet (if not using DHCP, log in to the web interface at <http://192.168.8.1> and configure appropriately).
+  * Go to Firmware link on left-hand side, upgrade to the newest version (2.27)
+    * Untick 'Keep settings' to ensure a clean install
+* If no easy internet connection available, download firmware from
+  <https://www.gl-inet.com/firmware/ar150/v1/> (as of May 2018,
+  lede-ar150-2.27.bin) and upload to <http://192.168.8.1>
+* Browse to <http://192.168.8.1> and set password again
 * Powercycle system (this enables SSH)
 * Connect via SSH: `ssh -oUserKnownHostsFile=/dev/null root@192.168.8.1`
 
 ## Configure the device
+
+Various aspects of configuration need tweaking.
 
 Set hostname:
 
@@ -33,7 +39,7 @@ Disable wireless:
 
 PoE only works over the WAN port.  To reduce the number of ports required to
 make the device function, the WAN port can be configured similarly to the LAN
-port.
+port.  To do this:
 
 * Edit `/etc/config/firewall` - to config zone named "lan", set:
 
@@ -64,6 +70,8 @@ To disable DHCP on LAN port:
 * `/etc/init.d/odhcpd restart`
 
 ## Install apcupsd
+
+apcupsd is used to communicate with the UPS.
 
 Ensure connected to internet, then:
 
