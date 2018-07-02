@@ -9,19 +9,22 @@ this goes wrong, see the final section on recovering if you brick the device.)
 * Connect the LAN port.  The GL-iNet will have the IP 192.168.8.1, so assign an
   appropriate address in the range 192.168.8.0/24 to a system to manage it.
 * Browse to <http://192.168.8.1> and follow instructions to set password
-* If convenient, connect the WAN port to the internet (if not using DHCP, log in to the web interface at <http://192.168.8.1> and configure appropriately).
+* Connect the WAN port to the internet (if not using DHCP, log in to the web
+  interface at <http://192.168.8.1> and configure appropriately).
   * Go to Firmware link on left-hand side, upgrade to the newest version (2.27)
     * Untick 'Keep settings' to ensure a clean install
-* If no easy internet connection available, download firmware from
-  <https://www.gl-inet.com/firmware/ar150/v1/> (as of May 2018,
-  lede-ar150-2.27.bin) and upload to <http://192.168.8.1>
+  * If no easy internet connection available, download firmware from
+  <http://download.gl-inet.com/firmware/ar150/v1/> (as of May 2018,
+  lede-ar150-2.27.bin) and upload to <http://192.168.8.1>, but note internet
+  access will be required later.
 * Browse to <http://192.168.8.1> and set password again
-* Powercycle system (this enables SSH)
 * Connect via SSH: `ssh -oUserKnownHostsFile=/dev/null root@192.168.8.1`
+  * If unable to connect, powercycle system
 
 ## Configure the device
 
-Various aspects of configuration need tweaking.
+Various aspects of configuration need tweaking.  These can either be done via
+the web interface (<http://192.168.8.1/cgi-bin/luci>) or the command line.
 
 Set hostname:
 
@@ -34,20 +37,30 @@ Disable wireless:
 
       option disabled '1'
 
+* `/etc/init.d/network restart`
+
+If the device needs custom NTP servers:
+
+* Edit `/etc/config/system` and adjust the `list server '<item>'` lines as appropriate
+* `/etc/init.d/system restart`
 
 ### Make services available over wan as well as lan interface
 
 PoE only works over the WAN port.  To reduce the number of ports required to
 make the device function, the WAN port can be configured similarly to the LAN
-port.  To do this:
+port.
 
-* Edit `/etc/config/firewall` - to config zone named "lan", set:
+* Edit `/etc/config/firewall` - to config zone named "lan", add:
 
-      option network 'lan wan'
+      list network 'wan'
 
-  and to config zone named "wan" set:
+  (or, if the config file is in the older format, set `option network 'lan wan'`)
 
-      option network 'wan6'
+  and to config zone named "wan" remove:
+
+      list network 'wan'
+
+  (or, if in the older format, set `option network 'wan6'` - ie without `wan`)
 
 * `/etc/init.d/firewall` restart
 
@@ -161,10 +174,21 @@ Follow README.md
       command[check_apc_load]=/usr/sbin/check_apcupsd load
       command[check_apc_time]=/usr/sbin/check_apcupsd time
 
+* Check from a client:
+```
+% /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_apc_status
+OK - STATUS : ONLINE
+% /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_apc_charge
+OK - Battery Charge: 75.0% | charge=75.0;;
+% /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_apc_load
+OK - Load: .0% | load=.0;;
+% /usr/lib/nagios/plugins/check_nrpe -H 192.168.8.1 -c check_apc_time
+OK - Time Left: 665.6 Minutes | timeleft=665.6;;
+```
 
 ## Recovering if you brick the device
 
-* Download firmware from <https://www.gl-inet.com/firmware/ar150/v1/> (as of May 2018, lede-ar150-2.27.bin)
+* Download firmware from <http://download.gl-inet.com/firmware/ar150/v1/> (as of May 2018, lede-ar150-2.27.bin)
 * Remove all cables
 * Add the LAN cable
 * Hold down the Reset button

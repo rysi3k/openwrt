@@ -4,7 +4,7 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
 
 ## Step-by-step guide
 
-*    Create a Debian jessie VM (can't be stretch as we need libssl 1.0 and stretch has 1.1)
+*   These instructions are based on a Debian stretch install (previous versions of OpenWRT required jessie for libssl compatibility reasons, but the May 2018 versions have the same versions).
 *   Install necessary packages: `apt-get install autoconf binutils build-essential gawk gettext git libncurses5-dev libssl-dev libz-dev ncurses-term openssl sharutils subversion unzip`
 *    Get the source `git clone https://github.com/openwrt/openwrt.git openwrt-git && cd $_`
 *    We can use the latest config: `wget https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/config -O .config`
@@ -15,7 +15,7 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
     *    Uncheck "Build the OpenWrt SDK"
 *    Remove all modules: `sed 's/=m$/=n/' -i.bak .config`
 *    Sanity check: `make prereq`
-*    Build with: `script -c "time make -j4 V=s tools/install && date && time make -j4 V=s toolchain/install" ~/build.log`
+*    Build with: `script -c "time make -j4 V=s tools/install && date && time make -j4 V=s toolchain/install" build-$(date +'%FT%T').log`
 *   Check out the packages from this git repository:
 ```
 git clone https://github.com/mdhowe/openwrt.git ../openwrt-packages
@@ -23,13 +23,13 @@ ln -s ../../../../openwrt-packages/package/network/utils/monitoring-plugins pack
 ln -s ../../../../openwrt-packages/package/network/utils/nrpe package/network/utils/nrpe
 ```
 *   `make oldconfig` and choose to make nrpe and monitoring-plugins as modules
-*   `script -c "time make -j4 V=s package/nrpe/compile" -a ~/nrpe-build.log`
-*   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a ~/monitoring-plugins-build.log`
-*    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/ar71xx/packages/base/`
+*   `script -c "time make -j4 V=s package/nrpe/compile" -a nrpe-build-$(date +'%FT%T').log`
+*   `script -c "time make -j4 V=s package/monitoring-plugins/compile" -a monitoring-plugins-build-$(date +'%FT%T').log`
+*    Should find we have a bunch of ipk package files (the build and the dependencies): `ls -hgotr bin/packages/mips_24kc/base/`
 *   **check** that they look sane - you want nrpe and monitoring-plugins, and perhaps libopenssl.  If you have libc (for example) things will probably break.
 *    Copy across to the GL-AR150:
 ```
-cd bin/ar71xx/packages && tar -cvf /tmp/monitoring-packages.tar base/
+cd bin/packages/mips_24kc && tar -cvf /tmp/monitoring-packages.tar base/
 scp /tmp/monitoring-packages.tar root@gl-ar150.domain:
 ```
 *    Then, on the GL-AR150, install and enable nrpe:
