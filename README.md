@@ -7,6 +7,7 @@ In general, follow <http://nerdbynature.de/s9y/2016/10/03/Building-NRPE-for-Open
 *   These instructions are based on a Debian stretch install (previous versions of OpenWRT required jessie for libssl compatibility reasons, but the May 2018 versions have the same versions).
 *   Install necessary packages: `apt-get install autoconf binutils build-essential gawk gettext git libncurses5-dev libssl-dev libz-dev ncurses-term openssl sharutils subversion unzip`
 *    Get the source `git clone https://github.com/openwrt/openwrt.git openwrt-git && cd $_`
+*    Switch to proper branch, master is almost always NOT good choice
 *    We can use the latest config: `wget https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/config -O .config`
 *    `make defconfig`
 *    `make menuconfig`
